@@ -1,15 +1,21 @@
+from flask import Flask, send_file
 import pdfkit
 
-def convert_html_to_pdf(html_path, pdf_path):
-    # Convert HTML file to PDF
-    try:
-        pdfkit.from_file(html_path, pdf_path)
-        print(f"PDF generated successfully: {pdf_path}")
-    except Exception as e:
-        print(f"Failed to generate PDF: {e}")
+app = Flask(__name__)
 
-if __name__ == "__main__":
-    html_path = 'template.html'  # Path to your HTML file
-    pdf_path = 'output.pdf'   # Path where you want to save the PDF
-    
-    convert_html_to_pdf(html_path, pdf_path)
+# Configure pdfkit to use the installed wkhtmltopdf executable
+# PDFKIT_CONFIG = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')  # Adjust path as necessary
+
+@app.route('/generate-pdf-from-html', methods=['GET'])
+def generate_pdf_from_html():
+    html_file_path = './template.html'  # Path to your HTML file
+    pdf_filename = 'output.pdf'
+
+    # Generate PDF from the HTML file
+    pdfkit.from_file(html_file_path, pdf_filename)
+
+    # Send the generated PDF file as a response
+    return send_file(pdf_filename, as_attachment=True, download_name='downloaded.pdf')
+
+if __name__ == '__main__':
+    app.run(debug=True)
