@@ -18,4 +18,4 @@ def generate_pdf_from_html():
     return send_file(pdf_filename, as_attachment=True, download_name='downloaded.pdf')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
