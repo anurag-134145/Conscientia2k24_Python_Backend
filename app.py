@@ -2,16 +2,23 @@ from flask import Flask, request, send_file, render_template_string
 import pdfkit
 import os
 import flask_cors
+import threading
+import time
 
 app = Flask(__name__)
 flask_cors.CORS(app)
 
 # Configure pdfkit to use the installed wkhtmltopdf executable
 # PDFKIT_CONFIG = pdfkit.configuration(wkhtmltopdf='/usr/local/bin/wkhtmltopdf')  # Adjust path as necessary
-
-@app.route('/')
-def index():
-    return 'PDF Generator'
+def delete_file_after_delay(file_path, delay):
+    # Wait for the specified delay (in seconds)
+    time.sleep(delay)
+    # Check if the file exists and delete it
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        print(f"{file_path} has been deleted.")
+    else:
+        print(f"{file_path} does not exist.")
 
 @app.route('/generate-pdf', methods=['POST'])
 def generate_pdf():
@@ -29,6 +36,7 @@ def generate_pdf():
         f.write(pdf)
 
     # Send the file to the client
+    threading.Thread(target=delete_file_after_delay, args=(fileName, 300)).start()
     return send_file(fileName, as_attachment=True, download_name='downloaded.pdf')
 
 if __name__ == '__main__':
