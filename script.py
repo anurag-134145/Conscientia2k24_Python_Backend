@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/generate-pdf', methods=['POST'])
 def generate_pdf():
     data = request.json
-    html_content = '<h1>PDF Generated</h1>'
+    html_content = data.get('html_content')
 
     # You can customize the HTML content or use a template
     # html_content = render_template_string(html_content)
