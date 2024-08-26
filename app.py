@@ -1,8 +1,10 @@
 from flask import Flask, request, send_file, render_template_string
 import pdfkit
 import os
+from flask-cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Configure pdfkit to use the installed wkhtmltopdf executable
 # PDFKIT_CONFIG = pdfkit.configuration(wkhtmltopdf='/usr/local/bin/wkhtmltopdf')  # Adjust path as necessary

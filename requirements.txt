@@ -1,2 +1,3 @@
 pdfkit
 flask
+flask-cors
