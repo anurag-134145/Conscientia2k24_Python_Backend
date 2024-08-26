@@ -30,4 +30,4 @@ def generate_pdf():
     return send_file(pdf_filename, as_attachment=True, download_name='downloaded.pdf')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
