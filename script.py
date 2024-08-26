@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 # Configure pdfkit to use the installed wkhtmltopdf executable
-PDFKIT_CONFIG = pdfkit.configuration(wkhtmltopdf='/usr/local/bin/wkhtmltopdf')  # Adjust path as necessary
+# PDFKIT_CONFIG = pdfkit.configuration(wkhtmltopdf='/usr/local/bin/wkhtmltopdf')  # Adjust path as necessary
 
 @app.route('/generate-pdf', methods=['POST'])
 def generate_pdf():
@@ -15,7 +15,7 @@ def generate_pdf():
     # You can customize the HTML content or use a template
     # html_content = render_template_string(html_content)
 
-    pdf = pdfkit.from_string(html_content, False, configuration=PDFKIT_CONFIG)
+    pdf = pdfkit.from_string(html_content, False)
 
     # Save PDF to a file
     pdf_filename = 'generated.pdf'
