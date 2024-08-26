@@ -14,7 +14,8 @@ def index():
 @app.route('/generate-pdf', methods=['POST'])
 def generate_pdf():
     data = request.json
-    html_content = data.get('html_content')
+    html_content = data.get('htmlContent')
+    fileName = data.get('tempName');
 
     # You can customize the HTML content or use a template
     # html_content = render_template_string(html_content)
@@ -22,12 +23,11 @@ def generate_pdf():
     pdf = pdfkit.from_string(html_content, False)
 
     # Save PDF to a file
-    pdf_filename = 'generated.pdf'
-    with open(pdf_filename, 'wb') as f:
+    with open(fileName, 'wb') as f:
         f.write(pdf)
 
     # Send the file to the client
-    return send_file(pdf_filename, as_attachment=True, download_name='downloaded.pdf')
+    return send_file(fileName, as_attachment=True, download_name='downloaded.pdf')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
