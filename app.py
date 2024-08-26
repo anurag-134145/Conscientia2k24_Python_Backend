@@ -20,6 +20,10 @@ def delete_file_after_delay(file_path, delay):
     else:
         print(f"{file_path} does not exist.")
 
+@app.route('/')
+def index():
+    return 'Server is running'
+
 @app.route('/generate-pdf', methods=['POST'])
 def generate_pdf():
     data = request.json
@@ -40,4 +44,4 @@ def generate_pdf():
     return send_file(fileName, as_attachment=True, download_name='downloaded.pdf')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem'))
+    app.run(host='0.0.0.0', port=5000)
