@@ -7,6 +7,10 @@ app = Flask(__name__)
 # Configure pdfkit to use the installed wkhtmltopdf executable
 # PDFKIT_CONFIG = pdfkit.configuration(wkhtmltopdf='/usr/local/bin/wkhtmltopdf')  # Adjust path as necessary
 
+@app.route('/')
+def index():
+    return 'PDF Generator'
+
 @app.route('/generate-pdf', methods=['POST'])
 def generate_pdf():
     data = request.json
@@ -26,4 +30,4 @@ def generate_pdf():
     return send_file(pdf_filename, as_attachment=True, download_name='downloaded.pdf')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
